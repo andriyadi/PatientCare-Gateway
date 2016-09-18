@@ -1,0 +1,55 @@
+{
+  "_args": [
+    [
+      "edisonedison-ssd1306-master/",
+      "/home/pi/Projects/nodejs/Explore/oled"
+    ]
+  ],
+  "_from": "edisonedison-ssd1306-master",
+  "_id": "edison-ssd1306@1.0.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/edison-ssd1306",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": null,
+    "raw": "edisonedison-ssd1306-master/",
+    "rawSpec": "edisonedison-ssd1306-master/",
+    "scope": null,
+    "spec": "/home/pi/Projects/nodejs/Explore/oled/edisonedison-ssd1306-master",
+    "type": "directory"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:edisonedison-ssd1306-master",
+  "_shasum": "5a2baa203ad8eed8775246745fc3c8d0cb6e74dd",
+  "_shrinkwrap": null,
+  "_spec": "edisonedison-ssd1306-master/",
+  "_where": "/home/pi/Projects/nodejs/Explore/oled",
+  "author": {
+    "email": "wballard@mailframe.net",
+    "name": "Will Ballard"
+  },
+  "dependencies": {
+    "coffee-script": "^1.8.0",
+    "i2c": "~0.2.1"
+  },
+  "description": "Drive an SSD1306 based OLED display module on your Intel Edison",
+  "devDependencies": {},
+  "keywords": [
+    "Intel",
+    "Edison",
+    "OLED"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "edison-ssd1306",
+  "optionalDependencies": {},
+  "readme": "##TLDR\n\nThis is a nodejs module to control I2C OLED display modules based\non SSD1306. I tested with [http://smile.amazon.com/gp/product/B00O2LLT30/ref=oh_aui_search_detailpage?ie=UTF8&psc=1].\n\nConnected to my Edison with [https://www.sparkfun.com/products/13034], which\nwill save you a bit of soldering since you can hook it with jumpers.\n\nThis derives from the awesome [https://github.com/adafruit/Adafruit-GFX-Library](Adafruit Graphics)\nthough it has derived so far you may not notice.\n\n```javascript\n\n```\n",
+  "readmeFilename": "README.md",
+  "scripts": {
+    "test": "./bin/test"
+  },
+  "version": "1.0.0"
+}

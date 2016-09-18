@@ -1,0 +1,18 @@
+{
+  "name": "lora-processing",
+  "version": "0.1.0",
+  "description": "Process output from lora gateway",
+  "main": "index.js",
+  "dependencies": {
+    "azure-iot-device": "^1.0.4",
+    "azure-iot-device-mqtt": "^1.0.4",
+    "mqtt": "^1.10.0",
+    "wiring-pi": "^2.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andri Yadi",
+  "license": "ISC"
+}
