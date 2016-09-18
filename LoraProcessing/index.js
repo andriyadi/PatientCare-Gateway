@@ -2,12 +2,9 @@
 
 const config = require('./config');
 const util = require('util');
-//import util from 'util';
 const readline = require('readline');
 const IoTHubHandler = require('./libs/IoTHubHandler');
-const querystring = require('querystring');
 const wpi = require('wiring-pi');
-const fs = require('fs');
 const SensorOledDisplay = require('./libs/SensorOledDisplay');
 
 wpi.setup('wpi');
@@ -83,7 +80,6 @@ function processControlPacketInfo(line) {
         console.log(info_str);
     }      
 }
-
 //End of Signal Debugging
 
 var sensorDisplay;
