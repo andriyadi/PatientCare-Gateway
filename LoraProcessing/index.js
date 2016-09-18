@@ -127,7 +127,7 @@ function processLine(line) {
     }
     
     else if (firstChar == '\\') {
-        gotValidData();
+        gotValidData(); //blink led when a valid package received
         
 		if (secondChar == '@') {
             iotHubHandler.processPayload(line.substring(2, line.length));

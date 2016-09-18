@@ -68,11 +68,11 @@ class IoTHubHandler {
     processPayload(line) {
 
         if (!this.isConnected) {
-            console.error("NOT CONNECTED")
+            console.error("Not connected to Azure IoT Hub")
             return;
         }
 
-        console.log('rcv msg to log (\@) on Azure IoT Hub: ' + line);
+        console.log('Received msg to log (\@) on Azure IoT Hub: ' + line);
 
         var payload = this.transformPayloadFrom(line);
         util.log(payload);
@@ -81,13 +81,13 @@ class IoTHubHandler {
             if (err) {
                 console.error(err)
             } else {
-                console.log("Data is published to IoT Hub");
+                console.log("Data is published to Azure IoT Hub");
             }
         });
     }
 
     connect(callback) {
-        console.log("Connecting to IoT Hub...");
+        console.log("Connecting to Azure IoT Hub...");
         var self = this;
         this.client.open(function(err) {
             if (err) {

@@ -2,7 +2,6 @@
 
 var config = {};
 
-
 config.backends = {
     IOTHUB: 0,
     MQTT: 1
