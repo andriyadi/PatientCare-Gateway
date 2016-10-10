@@ -39,22 +39,33 @@ class MQTTHandler extends EventEmitter{
     }
     
     connect(callback) {
-        console.log("Connecting to MQTT Broker...");
+        //console.log("Connecting to MQTT Broker...");
         var self = this;
-        this.client = mqtt.connect({
-            port: this.mqttConfig.port, 
-            host: this.mqttConfig.host, 
-            keepalive: 5, 
-            clientId:this.mqttConfig.clientId,
-            username: this.mqttConfig.username,
-            password: this.mqttConfig.password
-        });
+        //var mqttOpts = {
+        //    port: this.mqttConfig.port,
+        //    host: this.mqttConfig.host,
+        //    keepalive: 5,
+        //    clientId:this.mqttConfig.clientId,
+        //    username: this.mqttConfig.username,
+        //    password: this.mqttConfig.password
+        //};
+        //
+        //if (this.mqttConfig.protocol) {
+        //    mqttOpts.protocolId = this.mqttConfig.protocol;
+        //}
+        //
+        //if (this.mqttConfig.protocolId) {
+        //    mqttOpts.protocolId = this.mqttConfig.protocolId;
+        //}
+
+        var mqttOpts = this.mqttConfig;
+        this.client = mqtt.connect(mqttOpts);
         
         this.client.on('connect', function() {
             //mqttClient.subscribe(MQTT_TOPIC_SUBSCRIBE);
 
             self.isConnected = true;
-            console.log('MQTT Connected');
+            //console.log('MQTT Connected');
             self.emit(MQTTHandler.Events.CONNECTED);
             if (callback) {
                 callback(null);

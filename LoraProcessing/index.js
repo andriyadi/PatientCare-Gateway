@@ -1,11 +1,13 @@
 'use strict';
 
+const wpi = require('wiring-pi');
 const config = require('./config');
 const util = require('util');
 const readline = require('readline');
 const IoTHubHandler = require('./libs/IoTHubHandler');
-const wpi = require('wiring-pi');
 const SensorOledDisplay = require('./libs/SensorOledDisplay');
+const MQTTMakestroCloudHandler = require('./libs/MQTTMakestroCloudHandler');
+const ArtikMQTTHandler = require('./libs/ArtikMQTTHandler');
 
 wpi.setup('wpi');
 wpi.pinMode(config.gpio.indicatorPin, wpi.OUTPUT);
@@ -19,15 +21,6 @@ var rl = readline.createInterface({
   terminal: true
 });
 
-var iotHubHandler = null;
-iotHubHandler = new IoTHubHandler(config.iothub.connectionString);
-iotHubHandler.connect(function(err) {
-    if (err) console.error(err)
-    else {
-        console.log("Connected to IoT Hub");
-    }
-})
-
 // Begin of Signal Debugging
 const PKT_TYPE_DATA = 0x10;
 const PKT_TYPE_ACK = 0x20;
@@ -36,12 +29,13 @@ const PKT_FLAG_DATA_ENCRYPTED = 0x04;
 const PKT_FLAG_DATA_WAPPKEY = 0x02;
 const PKT_FLAG_DATA_ISBINARY = 0x01;
 
-var rawFormat = false;
-var dst, src, seq, datalen, SNR, RSSI;
-var ptype, ptypestr;
-var info_str;
-
 function processControlPacketInfo(line) {
+
+    var rawFormat = false;
+    var dst, src, seq, datalen, SNR, RSSI;
+    var ptype, ptypestr;
+    var info_str;
+
     //console.log("===> " + line);
     var pkgs = line.split(",");
     //console.log(parseInt(pkgs[1]));
@@ -87,6 +81,33 @@ if (config.display.oledEnabled) {
     sensorDisplay = new SensorOledDisplay();
 }
 
+var iotHubHandler = null;
+if (config.iothub.activated) {
+    iotHubHandler = new IoTHubHandler(config.iothub.connectionString);
+    iotHubHandler.connect(function (err) {
+        if (err) console.error(err)
+        else {
+            console.log("Connected to IoT Hub");
+        }
+    })
+}
+
+var mqttMakestroCloudHandler = null;
+if (config.makestro.activated) {
+    if (mqttMakestroCloudHandler == null) {
+        mqttMakestroCloudHandler = new MQTTMakestroCloudHandler(config);
+        mqttMakestroCloudHandler.begin();
+    }
+}
+
+var artikMqttHandler = null;
+if (config.artik.activated) {
+    if (artikMqttHandler == null) {
+        artikMqttHandler = new ArtikMQTTHandler(config);
+        artikMqttHandler.begin();
+    }
+}
+
 function gotValidData() {
     var value = 0;
     var count = 0;
@@ -125,8 +146,14 @@ function processLine(line) {
     else if (firstChar == '\\') {
         gotValidData(); //blink led when a valid package received
         
-		if (secondChar == '@') {
+		if (secondChar == '@' && config.iothub.activated) {
             iotHubHandler.processPayload(line.substring(2, line.length));
+        }
+        else if (secondChar == '#' && config.makestro.activated) {
+            mqttMakestroCloudHandler.processPayload(line.substring(2, line.length));
+        }
+        else if (secondChar == '%' && config.artik.activated) {
+            artikMqttHandler.processPayload(line.substring(2, line.length));
         }
     }
 }
